@@ -50,8 +50,10 @@ Para algunos de los puntos proveer imágenes.
 #### 5- Mergear código con conflictos
   - Instalar alguna herramienta de comparación. Idealmente una 3-Way:
     - P4Merge https://www.perforce.com/downloads/visual-merge-tool. Se puede omitir registración. Instalar solo opcion Merge and DiffTool.
-    ![alt text](imagenes/p4merge.png)
-    - ByondCompare trial version https://www.scootersoftware.com/download.php
+
+![p4merge](imagenes/p4merge.png)
+
+- ByondCompare trial version https://www.scootersoftware.com/download.php
   - Configurar Tortoise/SourceTree para soportar esta herramienta.
     - https://www.scootersoftware.com/support.php?zz=kb_vcs
     - https://medium.com/@robinvanderknaap/using-p4merge-with-tortoisegit-87c1714eb5e2
