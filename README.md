@@ -49,11 +49,12 @@ Para algunos de los puntos proveer imágenes.
 
 #### 5- Mergear código con conflictos
   - Instalar alguna herramienta de comparación. Idealmente una 3-Way:
-    - P4Merge https://www.perforce.com/downloads/visual-merge-tool. Se puede omitir registración
+    - P4Merge https://www.perforce.com/downloads/visual-merge-tool. Se puede omitir registración. Instalar solo opcion Merge and DiffTool.
+    ![alt text](imagenes/p4merge.png)
     - ByondCompare trial version https://www.scootersoftware.com/download.php
   - Configurar Tortoise/SourceTree para soportar esta herramienta.
     - https://www.scootersoftware.com/support.php?zz=kb_vcs
-    - http://hotkoehls.com/2015/04/use-perforce-p4merge-with-tortoisegit/
+    - https://medium.com/@robinvanderknaap/using-p4merge-with-tortoisegit-87c1714eb5e2
   - Clonar en un segundo directorio el repositorio creado en github.
   - En el clon inicial, modificar el Readme.md agregando más texto.
   - Hacer commit y subir el cambio a master a github.
