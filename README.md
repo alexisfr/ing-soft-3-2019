@@ -2,6 +2,36 @@
 
 Repositorio Git de Ingeniería del Software 3 - Año 2019
 
+# Tabla de contenidos
+
+  * [Trabajo Práctico 1 - Git Básico](#trabajo-práctico-1---git-básico)
+      * [1- Objetivos de Aprendizaje](#1--objetivos-de-aprendizaje)
+      * [2- Unidad temática que incluye este trabajo práctico](#2--unidad-temática-que-incluye-este-trabajo-práctico)
+      * [3- Consignas a desarrollar en el trabajo práctico:](#3--consignas-a-desarrollar-en-el-trabajo-práctico)
+      * [4- Desarrollo:](#4--desarrollo)
+        * [1- Instalar Git](#1--instalar-git)
+        * [2- Crear un repositorio local y agregar archivos](#2--crear-un-repositorio-local-y-agregar-archivos)
+        * [3- Crear un repositorio remoto](#3--crear-un-repositorio-remoto)
+        * [4- Familiarizarse con el concepto de Pull Request](#4--familiarizarse-con-el-concepto-de-pull-request)
+        * [5- Mergear código con conflictos](#5--mergear-código-con-conflictos)
+        * [6- Algunos ejercicios online](#6--algunos-ejercicios-online)
+        * [7- Crear Repositorio de la materia](#7--crear-repositorio-de-la-materia)
+      * [Referencias](#referencias)
+  * [Trabajo Práctico 2 - Herramientas de construcción de software](#trabajo-práctico-2---herramientas-de-construcción-de-software)
+      * [1- Objetivos de Aprendizaje](#1--objetivos-de-aprendizaje-1)
+      * [2- Unidad temática que incluye este trabajo práctico](#2--unidad-temática-que-incluye-este-trabajo-práctico-1)
+      * [3- Consignas a desarrollar en el trabajo práctico:](#3--consignas-a-desarrollar-en-el-trabajo-práctico-1)
+      * [4- Desarrollo:](#4--desarrollo-1)
+        * [1- Instalar Java JDK si no dispone del mismo.](#1--instalar-java-jdk-si-no-dispone-del-mismo)
+        * [2- Instalar Maven](#2--instalar-maven)
+        * [3- Introducción a Maven](#3--introducción-a-maven)
+        * [4- Maven Continuación](#4--maven-continuación)
+        * [6- Manejo de dependencias](#6--manejo-de-dependencias)
+        * [7- Utilizar una IDE](#7--utilizar-una-ide)
+        * [8- Build tools para otros lenguages](#8--build-tools-para-otros-lenguages)
+        * [9- Ejemplo con nodejs (Opcional, pero recomendando)](#9--ejemplo-con-nodejs-opcional-pero-recomendando)
+        * [10- Presentación](#10--presentación)
+
 ## Trabajo Práctico 1 - Git Básico
 
 ### 1- Objetivos de Aprendizaje
