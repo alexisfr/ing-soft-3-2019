@@ -425,12 +425,13 @@ Utilizaremos como guía el siguiente tutorial de Spring Boot: https://spring.io/
 
 #### 2- Configurar la aplicación
   - Clonar el siguiente repositorio: https://github.com/spring-guides/tut-rest
-  - Copiar el contenido de la carpeta nonrest a una nueva carpeta en nuestro reposiotrio, por ejemplo ./payroll-server
+  - Copiar el ./pom.xml y la carpeta nonrest a una nueva carpeta en nuestro repositorio, por ejemplo ./payroll
+  - Renombrar nonrest a server en nuestro repositorio.
   - Agregar los archivos a git y generar un nuevo commit.
-  - Compilar el código
+  - Compilar el código (desde la raíz del repositorio):
     ```
-       mvn clean package spring-boot:repackage
-       cd payroll-server
+       cd payroll/server
+       mvn clean package spring-boot:repackage       
        mvn spring-boot:run
      ```
   - Importar el proyecto en el IDE (Elclipse o IntelliJ)
