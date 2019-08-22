@@ -425,19 +425,19 @@ Utilizaremos como guía el siguiente tutorial de Spring Boot: https://spring.io/
 
 #### 2- Configurar la aplicación
   - Clonar el siguiente repositorio: https://github.com/spring-guides/tut-rest
-  - Copiar el contenido de la carpeta nonrest a una nueva carpeta en nuestro reposiotrio, por ejemplo ./payroll
+  - Copiar el contenido de la carpeta nonrest a una nueva carpeta en nuestro reposiotrio, por ejemplo ./payroll-server
   - Agregar los archivos a git y generar un nuevo commit.
   - Compilar el código
     ```
        mvn clean package spring-boot:repackage
-       cd payroll
+       cd payroll-server
        mvn spring-boot:run
      ```
   - Importar el proyecto en el IDE (Elclipse o IntelliJ)
   - Ejecutar el sub-proyecto nonrest y ver que está disponible en http://localhost:8080
 
 #### 3- Analizar el proyecto
-  - Analizar el código del proyecto payroll, siguiendo el tutorial arriba mencionado
+  - Analizar el código del proyecto payroll-server, siguiendo el tutorial arriba mencionado
   - Obtener la lista de empleados
 ```bash
 curl -v localhost:8080/employees
@@ -446,18 +446,18 @@ curl -v localhost:8080/employees
   - Borrar un empleado
 
 #### 4- Agregando el proyecto RESTful
-  - Copiar el contenido de la carpeta rest a la carpeta ./payroll
+  - Copiar el contenido de la carpeta rest a la carpeta ./payroll-server
   - Agregar los archivos a git y generar un nuevo commit.
-  - Analizar nuevamente el proyecto payroll, siguiendo el tutorial.
+  - Analizar nuevamente el proyecto payroll-server, siguiendo el tutorial.
   - Entender las diferencias entre nonrest y rest
 
 #### 5- Agregando el proyecto evolution
-  - Copiar el contenido de la carpeta evolution a la carpeta ./payroll
+  - Copiar el contenido de la carpeta evolution a la carpeta ./payroll-server
   - Agregar los archivos a git y generar un nuevo commit.
   - Entender como funciona ```ResourceAssembler```
 
 #### 6- Agregando el proyecto links
-  - Copiar el contenido de la carpeta links a la carpeta ./payroll
+  - Copiar el contenido de la carpeta links a la carpeta ./payroll-server
   - Agregar los archivos a git y generar un nuevo commit.
   - Aquí vemos una implementación con más funcionalidad, revisar el código
   - Ejecutar comandos curl para obtener
