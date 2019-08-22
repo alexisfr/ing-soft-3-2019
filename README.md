@@ -2,8 +2,6 @@
 
 Repositorio Git de Ingeniería del Software 3 - Año 2019
 
-ninguno de los 2
-
 # Tabla de contenidos
 
   * [Trabajo Práctico 1 - Git Básico](#trabajo-práctico-1---git-básico)
@@ -33,6 +31,18 @@ ninguno de los 2
         * [8- Build tools para otros lenguages](#8--build-tools-para-otros-lenguages)
         * [9- Ejemplo con nodejs (Opcional, pero recomendando)](#9--ejemplo-con-nodejs-opcional-pero-recomendando)
         * [10- Presentación](#10--presentación)
+  * [Trabajo Práctico 3 - Software Distribuido - Servicios RESTful](#trabajo-práctico-3---software-distribuido---servicios-restful)
+      * [1- Objetivos de Aprendizaje](#1--objetivos-de-aprendizaje-2)
+      * [2- Unidad temática que incluye este trabajo práctico](#2--unidad-temática-que-incluye-este-trabajo-práctico-2)
+      * [3- Consignas a desarrollar en el trabajo práctico:](#3--consignas-a-desarrollar-en-el-trabajo-práctico-2)
+      * [4- Desarrollo:](#4--desarrollo-2)
+        * [1- Configurar el IDE para trabajar con Spring](#1--configurar-el-ide-para-trabajar-con-spring)
+        * [2- Configurar la aplicación](#2--configurar-la-aplicación)
+        * [3- Analizar el proyecto](#3--analizar-el-proyecto)
+        * [4- Agregando el proyecto RESTful](#4--agregando-el-proyecto-restful)
+        * [5- Agregando el proyecto evolution](#5--agregando-el-proyecto-evolution)
+        * [6- Agregando el proyecto links](#6--agregando-el-proyecto-links)
+        * [7- Agregar Customers](#7--agregar-customers)
 
 ## Trabajo Práctico 1 - Git Básico
 
@@ -383,9 +393,85 @@ npm start
 - Analizar el manejo de paquetes y dependencias realizado por npm.
 
 
-
 #### 10- Presentación
 
 - Subir todo el código, ejemplos y respuestas a una carpeta trabajo-practico-02.
 
 > Tip: Agregar un archivo .gitignore al repositorio para evitar que se agreguen archivos que son resultado de la compilación u otros binarios, que no son necesarios, al mismo.
+
+## Trabajo Práctico 3 - Software Distribuido - Servicios RESTful
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos sobre conceptos referidos a Servicios RESTful.
+ - Analizar e implementar una aplicación utilizando el framework Spring Boot
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 8 
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+Utilizaremos como guía el siguiente tutorial de Spring Boot: https://spring.io/guides/tutorials/rest/
+
+### 4- Desarrollo:
+
+#### 1- Configurar el IDE para trabajar con Spring
+  - Eclipse:
+    - Instalar el **Spring Tools 4** desde Eclipse Marketplace (Menú Ayuda -> Eclipse Marketplace, y buscar Spring)
+       ![alt text][imagen1] 
+
+        [imagen1]: imagenes/spring-install.png
+    - Instalar lombok, siguiendo los pasos: https://projectlombok.org/setup/eclipse
+  - IntelliJ
+    - Instalar lombok, siguiendo los pasos: https://projectlombok.org/setup/intellij
+
+#### 2- Configurar la aplicación
+  - Clonar el siguiente repositorio: https://github.com/spring-guides/tut-rest
+  - Copiar el contenido de la carpeta nonrest a una nueva carpeta en nuestro reposiotrio, por ejemplo ./payroll
+  - Agregar los archivos a git y generar un nuevo commit.
+  - Compilar el código
+    ```
+       mvn clean package spring-boot:repackage
+       cd payroll
+       mvn spring-boot:run
+     ```
+  - Importar el proyecto en el IDE (Elclipse o IntelliJ)
+  - Ejecutar el sub-proyecto nonrest y ver que está disponible en http://localhost:8080
+
+#### 3- Analizar el proyecto
+  - Analizar el código del proyecto payroll, siguiendo el tutorial arriba mencionado
+  - Obtener la lista de empleados
+```bash
+curl -v localhost:8080/employees
+```
+  - Agregar un empleado
+  - Borrar un empleado
+
+#### 4- Agregando el proyecto RESTful
+  - Copiar el contenido de la carpeta rest a la carpeta ./payroll
+  - Agregar los archivos a git y generar un nuevo commit.
+  - Analizar nuevamente el proyecto payroll, siguiendo el tutorial.
+  - Entender las diferencias entre nonrest y rest
+
+#### 5- Agregando el proyecto evolution
+  - Copiar el contenido de la carpeta evolution a la carpeta ./payroll
+  - Agregar los archivos a git y generar un nuevo commit.
+  - Entender como funciona ```ResourceAssembler```
+
+#### 6- Agregando el proyecto links
+  - Copiar el contenido de la carpeta links a la carpeta ./payroll
+  - Agregar los archivos a git y generar un nuevo commit.
+  - Aquí vemos una implementación con más funcionalidad, revisar el código
+  - Ejecutar comandos curl para obtener
+     - Lista de ordenes
+     - Lista de empleados
+     - Crear una orden
+     - Completar la orden
+     - Crear otra orden y cancelarla.
+
+#### 7- Agregar Customers
+  - En el proyecto links agregar funcionalidad para soportar customers
+    - Entity
+    - Repository
+    - Controller
+    - etc..
+  - No es necesario vincularlos a la clase **Order**
+  - Probar los diferentes métodos con curl.
