@@ -5,44 +5,12 @@ Repositorio Git de Ingeniería del Software 3 - Año 2019
 # Tabla de contenidos
 
   * [Trabajo Práctico 1 - Git Básico](#trabajo-práctico-1---git-básico)
-      * [1- Objetivos de Aprendizaje](#1--objetivos-de-aprendizaje)
-      * [2- Unidad temática que incluye este trabajo práctico](#2--unidad-temática-que-incluye-este-trabajo-práctico)
-      * [3- Consignas a desarrollar en el trabajo práctico:](#3--consignas-a-desarrollar-en-el-trabajo-práctico)
-      * [4- Desarrollo:](#4--desarrollo)
-        * [1- Instalar Git](#1--instalar-git)
-        * [2- Crear un repositorio local y agregar archivos](#2--crear-un-repositorio-local-y-agregar-archivos)
-        * [3- Crear un repositorio remoto](#3--crear-un-repositorio-remoto)
-        * [4- Familiarizarse con el concepto de Pull Request](#4--familiarizarse-con-el-concepto-de-pull-request)
-        * [5- Mergear código con conflictos](#5--mergear-código-con-conflictos)
-        * [6- Algunos ejercicios online](#6--algunos-ejercicios-online)
-        * [7- Crear Repositorio de la materia](#7--crear-repositorio-de-la-materia)
-      * [Referencias](#referencias)
+     
   * [Trabajo Práctico 2 - Herramientas de construcción de software](#trabajo-práctico-2---herramientas-de-construcción-de-software)
-      * [1- Objetivos de Aprendizaje](#1--objetivos-de-aprendizaje-1)
-      * [2- Unidad temática que incluye este trabajo práctico](#2--unidad-temática-que-incluye-este-trabajo-práctico-1)
-      * [3- Consignas a desarrollar en el trabajo práctico:](#3--consignas-a-desarrollar-en-el-trabajo-práctico-1)
-      * [4- Desarrollo:](#4--desarrollo-1)
-        * [1- Instalar Java JDK si no dispone del mismo.](#1--instalar-java-jdk-si-no-dispone-del-mismo)
-        * [2- Instalar Maven](#2--instalar-maven)
-        * [3- Introducción a Maven](#3--introducción-a-maven)
-        * [4- Maven Continuación](#4--maven-continuación)
-        * [6- Manejo de dependencias](#6--manejo-de-dependencias)
-        * [7- Utilizar una IDE](#7--utilizar-una-ide)
-        * [8- Build tools para otros lenguages](#8--build-tools-para-otros-lenguages)
-        * [9- Ejemplo con nodejs (Opcional, pero recomendando)](#9--ejemplo-con-nodejs-opcional-pero-recomendando)
-        * [10- Presentación](#10--presentación)
+     
   * [Trabajo Práctico 3 - Software Distribuido - Servicios RESTful](#trabajo-práctico-3---software-distribuido---servicios-restful)
-      * [1- Objetivos de Aprendizaje](#1--objetivos-de-aprendizaje-2)
-      * [2- Unidad temática que incluye este trabajo práctico](#2--unidad-temática-que-incluye-este-trabajo-práctico-2)
-      * [3- Consignas a desarrollar en el trabajo práctico:](#3--consignas-a-desarrollar-en-el-trabajo-práctico-2)
-      * [4- Desarrollo:](#4--desarrollo-2)
-        * [1- Configurar el IDE para trabajar con Spring](#1--configurar-el-ide-para-trabajar-con-spring)
-        * [2- Configurar la aplicación](#2--configurar-la-aplicación)
-        * [3- Analizar el proyecto](#3--analizar-el-proyecto)
-        * [4- Agregando el proyecto RESTful](#4--agregando-el-proyecto-restful)
-        * [5- Agregando el proyecto evolution](#5--agregando-el-proyecto-evolution)
-        * [6- Agregando el proyecto links](#6--agregando-el-proyecto-links)
-        * [7- Agregar Customers](#7--agregar-customers)
+      
+  * [Trabajo Práctico 4 - Introducción a Docker](#trabajo-práctico-4---Introducción-a-docker)
 
 ## Trabajo Práctico 1 - Git Básico
 
@@ -476,3 +444,182 @@ curl -v localhost:8080/employees
     - etc..
   - No es necesario vincularlos a la clase **Order**
   - Probar los diferentes métodos con curl.
+
+## Trabajo Práctico 4 - Introducción a Docker
+
+### 1- Objetivos de Aprendizaje
+ - Familiarizarse con la tecnología de contendores 
+ - Ejercitar comandos básicos de Docker.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 9 (Libro Building Microservices: Cap 6)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+
+A continuación, se presentarán algunos conceptos generales de la tecnología de contenedores a manera de introducción al tema desde el punto de vista práctico.
+
+#### Que son los contenedores?
+
+Los contenedores son paquetes de software. Ellos contienen la aplicación a ejecutar junto con las librerías, archivos de configuración, etc para que esta aplicación pueda ser ejecutada. Estos contenedores utilizan características del sistema operativo, por ejemplo, cgroups, namespaces y otros aislamientos de recursos (sistema de archivos, red, etc) para proveer un entorno aislado de ejecución de dicha aplicación.
+
+Dado que ellos utilizan el kernel del sistema operativo en el que se ejecutan, no tienen el elevado consumo de recursos que por ejemplo tienen las máquinas virtuales, las cuales corren su propio sistema operativo.
+
+#### Que es docker?
+
+Docker es una herramienta que permite el despliegue de aplicaciones en contenedores. Además, provee una solución integrada tanto para la ejecución como para la creación de contenedores entre otras muchas funcionalidades.
+
+#### Porque usar contenedores?
+
+Los contenedores ofrecen un mecanismo de empaquetado lógico en el cual las aplicaciones pueden estar aisladas del entorno en el cual efectivamente se ejecutan. Este desacoplamiento permite a las aplicaciones en contenedores ser desplegadas de manera simple y consistente independientemente de si se trata de un Data Center privado, una Cloud publica, o una computadora de uso personal. Esto permite a los desarrolladores crear entornos predecibles que están aislados del resto de las aplicaciones y pueden ser ejecutados en cualquier lugar.
+
+Por otro lado, ofrecen un control más fino de los recursos y son más eficientes al momento de la ejecución que una máquina virtual.
+
+En los últimos años el uso de contenedores ha crecido exponencialmente y fue adoptado de forma masiva por prácticamente todas las compañías importantes de software.
+
+#### Máquinas Virtuales vs Contenedores 
+
+Los contenderos no fueron pensados como un remplazo de las máquinas virtuales. Cuando ambas tecnologías se utilizan en forma conjunta se obtienen los mejores resultados, por ejemplo, en los proveedores cloud como AWS, Google Cloud o Microsoft Azure.
+
+![alt text][imagen]
+
+[imagen]: imagenes/virtualbox-vs-container.png
+
+#### Conceptos Generales
+
+- **Container Image**: Una imagen contiene el sistema operativo base, la aplicación y todas sus dependencias necesarias para un despliegue rápido del contenedor.
+- **Container**: Es una instancia en ejecución de una imagen.
+- **Container Registry**: Las imágenes de Docker son almacenadas en un Registry y pueden ser descargadas cuando se necesitan. Un registry pude ser público, por ejemplo, DockerHub o instalado en un entorno privado.
+- **Docker Daemon**: el servicio en segundo plano que se ejecuta en el host que gestiona la construcción, ejecución y distribución de contenedores Docker. El daemon es el proceso que se ejecuta en el sistema operativo con el que los clientes hablan.
+- **Docker Client**: la herramienta de línea de comandos que permite al usuario interactuar con el daemon. En términos más generales, también puede haber otras formas de clientes, como Kitematic, que proporciona una GUI a los usuarios. 
+- **Dockerfile**: Son usados por los desarrolladores para automatizar la creación de imágenes de containedores. Con un Dockerfile, el demonio de Docker puede automáticamente construir una imagen.
+
+## 4- Desarrollo:
+
+#### 1- Instalar Docker Community Edition 
+  - Diferentes opciones para cada sistema operativo
+  - https://docs.docker.com/
+  - Ejecutar el siguiente comando para comprobar versiones de cliente y demonio.
+```bash
+docker version
+```
+
+#### 2- Explorar DockerHub
+   - Registrase en docker hub: https://hub.docker.com/
+   - Familiarizarse con el portal
+
+#### 3- Obtener la imagen BusyBox
+  - Ejecutar el siguiente comando, para bajar una imagen de DockerHub
+  ```bash
+  docker pull busybox
+  ```
+  - Verificar qué versión y tamaño tiene la imagen bajada, obtener una lista de imagenes locales:
+```bash
+docker images
+```
+
+#### 4- Ejecutando contenedores
+  - Ejecutar un contenedor utilizando el comando **run** de docker:
+```bash
+docker run busybox
+```
+
+  - Explicar porque no se obtuvo ningún resultado
+
+  - Especificamos algún comando a correr dentro del contendor, ejecutar por ejemplo:
+```bash
+docker run busybox echo "Hola Mundo"
+```
+
+  - Ver los contendores ejecutados utilizando el comando **ps**:
+```bash
+docker ps
+```
+  - Vemos que no existe nada en ejecución, correr entonces:
+```bash
+docker ps -a
+```
+  - Mostrar el resultado y explicar que se obtuvo como salida del comando anterior.
+
+#### 5- Ejecutando en modo interactivo
+
+  - Ejecutar el siguiente comando
+```bash
+docker run -it busybox sh
+```
+  - Para cada uno de los siguientes comandos dentro de contenedor, mostrar los resultados:
+```bash
+ps
+uptime
+free
+ls -l /
+```
+  - Salimos del contendor con:
+```bash
+exit
+```
+
+#### 6- Borrando contendores terminados
+
+  - Obtener la lista de contendores 
+```bash
+docker ps -a
+```
+  - Para borrar podemos utilizar el id o el nombre (autogenerado si no se especifica) de contendor que se desee, por ejemplo:
+```bash
+docker rm elated_lalande
+```
+  - Para borrar todos los contendores que no estén corriendo, ejecutar cualquiera de los siguientes comandos:
+```bash
+docker rm $(docker ps -a -q -f status=exited)
+```
+```bash
+docker container prune
+```
+
+#### 7- Montando volúmenes
+
+Hasta este punto los contenedores ejecutados no tenían contacto con el exterior, ellos corrían en su propio entorno hasta que terminaran su ejecución. Ahora veremos como montar un volumen dentro del contenedor para visualizar por ejemplo archivos del sistema huesped:
+
+  - Ejecutar el siguiente comando, cambiar myusuario por el usuario que corresponda. En linux/Mac puede utilizarse /home/miusuario):
+```bash
+docker run -it -v C:\Users\misuario\Desktop:/var/escritorio busybox /bin/sh
+```
+  - Dentro del contenedor correr
+```bash
+ls -l /var/escritorio
+touch /var/escritorio/hola.txt
+```
+  - Verificar que el Archivo se ha creado en el escritorio o en el directorio home según corresponda.
+
+#### 8- Publicando puertos
+
+En el caso de aplicaciones web o base de datos donde se interactúa con estas aplicaciones a través de un puerto al cual hay que acceder, estos puertos están visibles solo dentro del contenedor. Si queremos acceder desde el exterior deberemos exponerlos.
+
+  - Ejecutar la siguiente imagen, en este caso utilizamos la bandera -d (detach) para que nos devuelva el control de la consola:
+
+```bash
+docker run -d daviey/nyan-cat-web
+```
+  - Si ejecutamos un comando ps:
+```bash
+PS D:\> docker ps
+CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS               NAMES
+87d1c5f44809        daviey/nyan-cat-web   "nginx -g 'daemon of…"   2 minutes ago       Up 2 minutes        80/tcp, 443/tcp     compassionate_raman
+```
+  - Vemos que el contendor expone 2 puertos el 80 y el 443, pero si intentamos en un navegador acceder a http://localhost no sucede nada.
+
+  - Procedemos entonces a parar y remover este contenedor:
+```bash
+docker kill compassionate_raman
+docker rm compassionate_raman
+```
+  - Vamos a volver a correrlo otra vez, pero publicando uno de los puertos solamente, el este caso el 80
+
+```bash
+docker run -d -p 80:80 daviey/nyan-cat-web
+```
+  - Accedamos nuevamente a http://localhost y expliquemos que sucede.
+
+#### 8- Presentación del trabajo práctico.
+
+Subir un archivo **trabajo-practico-04.md** con las salidas de los comandos utilizados. Si es necesario incluir también capturas de pantalla.
