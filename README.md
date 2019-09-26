@@ -654,7 +654,7 @@ Este trabajo práctico corresponde a la unidad Nº: 4
      - ENTRYPOINT
 
 #### 2- Generar imagen de docker
-   - Utilizar el ejercicio del ./payroll/server
+   - Utilizar el código de la carpeta ./payroll/server
    - Compilar la salida con:
 ```bash
  mvn clean package spring-boot:repackage  
