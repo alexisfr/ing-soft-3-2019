@@ -12,6 +12,8 @@ Repositorio Git de Ingeniería del Software 3 - Año 2019
       
   * [Trabajo Práctico 4 - Introducción a Docker](#trabajo-práctico-4---Introducción-a-docker)
 
+  * [Trabajo Práctico 5 - Imágenes de Docker](#trabajo-práctico-5---Imágenes-de-Docker)
+
 ## Trabajo Práctico 1 - Git Básico
 
 ### 1- Objetivos de Aprendizaje
@@ -623,3 +625,88 @@ docker run -d -p 80:80 daviey/nyan-cat-web
 #### 8- Presentación del trabajo práctico.
 
 Subir un archivo **trabajo-practico-04.md** con las salidas de los comandos utilizados. Si es necesario incluir también capturas de pantalla.
+
+
+## Trabajo Práctico 5 - Imágenes de Docker
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos para construir y publicar imágenes de Docker.
+ - Familiarizarse con el vocabulario.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 4 
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+ - Los ejercicios se realizarán en clase con asistencia del Jefe de trabajos prácticos.
+ - En los puntos en los que se pida alguna descripción, realizarlo de la manera más clara posible.
+
+### 4- Desarrollo:
+
+#### 1- Conceptos de Dockerfiles
+  - Leer https://docs.docker.com/engine/reference/builder/ (tiempo estimado 2 horas)
+  - Describir las instrucciones
+     - FROM
+     - RUN
+     - ADD
+     - COPY
+     - EXPOSE
+     - CMD
+     - ENTRYPOINT
+
+#### 2- Generar imagen de docker
+   - Utilizar el ejercicio del ./payroll/server
+   - Compilar la salida con:
+```bash
+ mvn clean package spring-boot:repackage  
+```
+   - Agregar el siguiente Dockerfile
+```Dockerfile
+FROM openjdk:8-jre-alpine
+
+RUN apk add --no-cache bash
+
+WORKDIR /opt
+
+COPY target/*-SNAPSHOT.jar .
+
+ENV JAVA_OPTS="-Xms32m -Xmx128m"
+
+ENTRYPOINT exec java $JAVA_OPTS -jar ejemplo.jar
+```
+   - Generar la imagen de docker con el comando build
+```bash
+docker build -t test-java .
+```
+  - Ejecutar el contenedor
+```bash
+docker run test-java
+```
+  - Capturar y mostrar la salida.
+
+#### 3- Imagen para aplicación web en Nodejs
+  - Crear una la carpeta trabajo-practico-05/nodejs-docker
+  - Generar un proyecto siguiendo los pasos descriptos en el trabajo práctico 2 para Nodejs
+  - Escribir un Dockerfile para ejecutar la aplicación web localizada en ese directorio
+    - Usar como imagen base **node:8.11-alpine**
+    - Ejecutar **npm install** dentro durante el build.
+    - Exponer el puerto 3000
+  - Hacer un build de la imagen, nombrar la imagen **test-node**.
+  - Ejecutar la imagen **test-node** publicando el puerto 3000.
+  - Verificar en http://localhost:3000 que la aplicación está funcionando.
+  - Proveer el Dockerfile y los comandos ejecutados como resultado de este ejercicio.
+
+#### 4- Publicar la imagen en Docker Hub.
+  - Crear una cuenta en Docker Hub si no se dispone de una.
+  - Registrase localmente a la cuenta de Docker Hub:
+```bash
+docker login
+```
+  - Crear un tag de la imagen generada en el ejercicio 3. Reemplazar <mi_usuario> por el creado en el punto anterior.
+```bash
+docker tag test-node <mi_usuario>/test-node:latest
+```
+  - Subir la imagen a Docker Hub con el comando
+```bash
+docker push <mi_usuario>/test-node:latest
+``` 
+  - Como resultado de este ejercicio mostrar la salida de consola, o una captura de pantalla de la imagen disponible en Docker Hub.
