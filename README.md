@@ -14,6 +14,10 @@ Repositorio Git de Ingeniería del Software 3 - Año 2019
 
   * [Trabajo Práctico 5 - Imágenes de Docker](#trabajo-práctico-5---Imágenes-de-Docker)
 
+  * [Trabajo Práctico 6 - Primeros pasos con Jenkins](Trabajo-Práctico-6---Primeros-pasos-con-Jenkins)
+
+  * [Trabajo Práctico 7 - Herramientas de construcción en la nube](Trabajo-Práctico-7---Herramientas-de-construcción-en-la-nube)
+
 ## Trabajo Práctico 1 - Git Básico
 
 ### 1- Objetivos de Aprendizaje
@@ -710,3 +714,134 @@ docker tag test-node <mi_usuario>/test-node:latest
 docker push <mi_usuario>/test-node:latest
 ``` 
   - Como resultado de este ejercicio mostrar la salida de consola, o una captura de pantalla de la imagen disponible en Docker Hub.
+
+## Trabajo Práctico 6 - Primeros pasos con Jenkins
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos acerca de las herramientas de integración continua.
+ - Configurar este tipo de herramientas.
+ - Implementar procesos de construcción automatizado simples.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery: Cap 3)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+ - Los ejercicios se realizarán en clase con asistencia del Jefe de trabajos prácticos.
+ - Para una mejor evaluación del trabajo práctico, incluir capturas de pantalla de los pasos donde considere necesario.
+
+### 4- Desarrollo:
+
+#### 1- Poniendo en funcionamiento Jenkins
+  - Bajar la aplicación y ejecutarla (ejemplo para Windows):
+```bash
+
+mkdir -p C:\jenkins\data
+cd C:\jenkins
+
+wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+
+SET JENKINS_HOME=C:\jenkins\data
+
+java -jar jenkins.war --httpPort=8081
+```
+  - Se puede también ejecutar en contenedor de Jenkins (tamaño de imagen de docker ~700mb):
+
+```bash
+# Windows
+
+mkdir -p C:\jenkins\data
+docker run -d -p 8081:8080 -p 50000:50000 -v C:\jenkins\data:/var/jenkins_home jenkins/jenkins:lts
+```
+
+```bash
+# Linux / Mac OS
+
+mkdir -p ~/jenkins/data
+docker run -d -p 8081:8080 -p 50000:50000 -v ~/jenkins/data:/var/jenkins_home jenkins/jenkins:lts
+```
+  - Una vez en ejecución, abrir http://localhost:8081
+  - Inicialmente deberá especificar el texto dentro del archivo C:\jenkins\data\secrets\initialAdminPassword
+  - Instalar los plugins por defecto
+  - Crear el usuario admin inicial. Colocar cualquier valor que considere adecuado.
+
+#### 2- Conceptos generales
+  - Junto al Jefe de trabajos prácticos:
+    - Explicamos los diferentes componentes que vemos en la página principal
+    - Analizamos las opciones de administración de Jenkins
+
+#### 3- Instalando Plugins y configurando herramientas
+  - En Administrar Jenkins vamos a la sección de Administrar Plugins
+  - De la lista de plugins disponibles instalamos **Maven Integration plugin**
+  - Instalamos sin reiniciar el servidor.
+  - Abrir nuevamente página de Plugins y explorar la lista, para familiarizarse qué tipo de plugins hay disponibles.
+  - En la sección de administracion abrir la opción de configuracion de herramientas
+  - Agregar maven con el nombre de **M3** y que se instale automáticamente.
+
+#### 4- Creando el primer Pipeline Job
+  - Crear un nuevo item, del tipo Pipeline con nombre **hello-world**
+  - Una vez creado el job, en la sección Pipeline seleccionamos **try sample Pipeline** y luego **Hello World**
+  - Guardamos y ejecutamos el Job
+  - Analizar la salida del mismo
+ 
+#### 5- Creando un Pipeline Job con Git y Maven
+  - Similar al paso anterior creamos un ítem con el nombre **simple-maven**
+  - Elegir **Git + Maven** en la seccion **try sample Pipeline**
+  - Guardar y ejecutar el Job
+  - Analizar el script, para identificar los diferentes pasos definidos y correlacionarlos con lo que se ejecuta en el Job y se visualiza en la página del Job.
+
+#### 6- Utilizando nuestros proyectos
+  - Utilizando lo aprendido en el ejercicio 5
+    - Crear un Job que construya el proyecto **./payroll/server** del trabajo práctico 2.
+    - Obtener el código desde el repositorio de cada alumno (se puede crear un repositorio nuevo en github que contenga solamente el proyecto maven).
+    - Generar y publicar los artefactos que se producen.
+  - Como resultado de este ejercicio proveer el script en el archivo **./payroll/server/Jenkinsfile**
+
+## Trabajo Práctico 7 - Herramientas de construcción en la nube
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos acerca de las herramientas de integración continua en la nube.
+ - Configurar este tipo de herramientas.
+ - Implementar procesos simples de construcción automatizada.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery: Cap 3)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+ - Los ejercicios se realizarán en clase con asistencia del Jefe de trabajos prácticos.
+ - Para una mejor evaluación del trabajo práctico, incluir capturas de pantalla de los pasos donde considere necesario.
+ - En este caso existen varias herramientas con funcionalidades similares en la nube:
+   - [AppVeyor](https://www.appveyor.com/)   
+   - [CircleCI](https://circleci.com/)
+   - [Travis CI](https://travis-ci.com/)
+
+## 4- Desarrollo:
+
+#### 1- Pros y Contras
+  - Listar los pros y contras de este tipo de herramientas
+  - Sacar conclusiones
+
+#### 2- Configurando AppVeyor
+  - Crear una cuenta en AppVeyor, se puede utilizar el usuario de GitHub
+  - Configurar un proyecto utilizando un repositorio que contenga el código del proyecto Maven **./payroll/server**.
+  - Ir a la opción **SETTINGS**
+  - Dejar el entorno por defecto (Visual Studio 2015)
+  - En la opción **Build** configurar un script de línea de comando (CMD), para que genere los artefactos. Es posible que tenga que cambiar de directorio para generación:
+```
+cd <lugar donde está el pom.xml>
+mvn clean package
+```
+  - En la opción Artifacts especificar la ruta relativa para capturar los jar files de salida.
+  - Verificar que el Job se ejecuta con nuevos commits en el repositorio configurado.
+  - Opcional: Agregar Badges al repositorio para mostrar estado actual del build en GitHub.
+  - Como resultado de este ejercicio, exportar el yaml generado y subirlo en **./payroll/server/appveyor.yml**. Y mostrar capturas de pantalla con los artefactos y/o la historia de los builds ejecutados.
+
+#### 3- Opcional: Configurando CircleCI
+  - De manera similar al ejercicio 2, configurar un build job para el mismo proyecto, pero utilizando CircleCI
+  - Para capturar artefactos, utilizar esta referencia: https://circleci.com/docs/2.0/artifacts/
+  - Como resultado de este ejercicio, subir el config.yml a la carpeta **./payroll/server**
+
+#### 4- Opcional: Configurando TravisCI
+  - Configurar el mismo proyecto, pero para TravisCI. No es necesario publicar los artefactos porque TravisCI no dispone de esta funcionalidad.
+  - Como resultado de este ejercicio subir el archivo .travis.yml a la carpeta **./payroll/server**
+
+#### 5- Conclusiones.
+  - Hacer una breve descripción comparativa entre AppVeyor, CircleCI y TravisCI
