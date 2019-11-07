@@ -22,6 +22,8 @@ Repositorio Git de Ingeniería del Software 3 - Año 2019
 
   * [Trabajo Práctico 9 - Pruebas de unidad](#trabajo-Práctico-9---Pruebas-de-unidad)
 
+  * [Trabajo Práctico 10 - Pruebas de Integración](Trabajo-Práctico-10---Pruebas-de-Integración)
+
 
 ## Trabajo Práctico 1 - Git Básico
 
@@ -72,7 +74,7 @@ Para algunos de los puntos proveer imágenes.
   - Instalar alguna herramienta de comparación. Idealmente una 3-Way:
     - P4Merge https://www.perforce.com/downloads/visual-merge-tool:
 ![alt text](imagenes/p4merge.png)
-    - Se puede omitir registración. Instalar solo opcion Merge and DiffTool.
+    - Se puede omitir registración. Instalar solo opción Merge and DiffTool.
 
 - ByondCompare trial version https://www.scootersoftware.com/download.php
   - Configurar Tortoise/SourceTree para soportar esta herramienta.
@@ -1172,4 +1174,232 @@ public class EmployeeControllerTests extends AbstractTest {
   - Agregar al menos un unit test para otro endpoint, por ejemplo employees/{id} u Orders.
 
 #### 6- Capturar los unit tests como parte del proceso de CI/CD
-  - Hacer los cambios en Jenkins (on en la herramienta de CICD utilizada) y en el pom.xml si es necesario, para capturar los resultados y mostraslos en la ejecución del build
+  - Hacer los cambios en Jenkins (on en la herramienta de CICD utilizada) y en el pom.xml si es necesario, para capturar los resultados y mostrarlos en la ejecución del build
+
+
+# Trabajo Práctico 10 - Pruebas de Integración
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos sobre conceptos referidos a pruebas de integración (integration tests).
+ - Generar y ejecutar pruebas de integración utilizado frameworks de código abierto.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 6 (Libro Ingeniería de Software: Cap 8)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+
+#### Conceptos generales explicaciones de los mismos
+
+#### Pruebas de integración
+Una prueba de integración tiene como objetivo probar el comportamiento de un componente o la integración entre un conjunto de componentes. El término prueba funcional se usa a veces como sinónimo para prueba de integración. Las pruebas de integración comprueban que todo el sistema funciona según lo previsto, por lo que reducen la necesidad de pruebas manuales intensivas.
+
+Este tipo de pruebas le permiten traducir sus historias de usuario en un conjunto de pruebas. La prueba se asemejaría a una interacción esperada del usuario con la aplicación.
+
+#### Frameworks de pruebas 
+
+Existen una gran variedad de herramientas o frameworks disponibles para las pruebas de integración, tanto para componentes del backend como del frontend. Estas pueden ser comerciales, de código abierto o desarrolladas y utilizadas internamente por las compañías de software.
+
+Para este trabajo práctico vamos a probar aplicaciones web y rest y para ello utilizaremos Codeceptjs como ejemplo.
+
+#### Selenium
+
+Selenium es una herramienta de prueba de software automatizada y de código abierto para probar aplicaciones web. Tiene capacidades para operar en diferentes navegadores y sistemas operativos. Selenium es un conjunto de herramientas que ayuda a los testers a automatizar las aplicaciones basadas en la web de manera más eficiente.
+
+En este trabajo práctico utilizaremos la opción **WebDriver**, que nos permite enviar comandos directamente al navegador y obtener resultados. Además, podemos codificar las pruebas directamente en un lenguaje de programación, por ejemplo javascript y ejecutarlas como parte del proceso de CI/CD.
+
+#### Codeceptjs https://codecept.io/
+
+Codeceptjs es un framework end to end para pruebas de integración y de aceptación de usuario, es muy simple de usar y abstrae al que escribe los tests de trabajar directamente con el driver de Selenium o algún otro driver.
+
+## 4- Desarrollo:
+
+#### 1- Familiarizarse con CodeceptJs
+  - El objeto I
+  - 
+
+#### 2- Testeando la pagina de GitHub
+
+  - En un directorio, por ejemplo C:\tests\githubtests ejecutar:
+
+```bash
+npm init -y
+```
+
+ - Instalar CodeceptJS con la librería webdriverio
+```npm install codeceptjs webdriverio --save-dev```
+
+ - Inicializar CodeceptJS:
+
+```npx codeceptjs init```
+
+(usar node node_modules/.bin/codeceptjs init si tiene problemas con npx)
+
+  - Responder las preguntas. Aceptar valores por defecto. Cuando se pregunte por los helpers, seleccionar WebDriver. Cuando pregunte por chrome se puede cambiar a Firefox si lo desea.
+
+```
+? What helpers do you want to use?
+❯◉ WebDriver
+ ◯ Protractor
+ ◯ Puppeteer
+ ◯ Appium
+ ◯ Nightmare
+ ◯ FileSystem
+```
+
+   - Crear el Test, va a preguntar por nombre de archivo y de prueba, poner 'github':
+```npx codeceptjs gt```
+
+  - Editar el archivo generado:
+```
+Feature('My First Test');
+Scenario('test something', (I) => {
+
+});
+```
+
+  - Escribir un escenario de prueba:
+```Feature('My First Test');
+
+Scenario('test something', (I) => {
+  I.amOnPage('https://github.com');
+  I.see('GitHub');
+});
+```
+
+  - Preparar Selenium Server:
+
+```npm i @wdio/selenium-standalone-service --save```
+
+  - Para que selenium comience automáticamente agregar la sección de plugins:
+
+```
+exports.config = {
+  // ...
+  // inside condecept.conf.js
+  plugins: {
+    wdio: {
+      enabled: true,
+      services: ['selenium-standalone']
+    }
+  }
+}
+
+```
+
+ - Finalmente correr el test:
+```npx codeceptjs run --steps```
+
+#### 3- Obtener el código
+  - En un directorio, por ejemplo C:\tests\payroll-test ejecutar:
+
+```bash
+npm init -y
+```
+
+ - Instalar CodeceptJS con la librería webdriverio
+```npm install codeceptjs chai --save-dev```
+
+ - Inicializar CodeceptJS:
+
+```npx codeceptjs init```
+
+(usar node node_modules/.bin/codeceptjs init si tiene problemas con npx)
+
+  - Responder las preguntas. Aceptar valores por defecto. Cuando se pregunte por los helpers, seleccionar WebDriver. Cuando pregunte por chrome se puede cambiar a Firefox si lo desea.
+
+```
+? What helpers do you want to use?
+❯◉ WebDriver
+ ◯ Protractor
+ ◯ Puppeteer
+ ◯ Appium
+ ◯ Nightmare
+ ◯ FileSystem
+```
+
+   - Crear el Test, va a preguntar por nombre de archivo y de prueba, poner 'github':
+```npx codeceptjs gt```
+
+  - Editar el archivo generado:
+```
+const expect = require('chai').expect;
+const {I} = inject();
+
+Feature('Payroll');
+
+Scenario('Verificar a successful call', async () => {
+	const res = await I.sendGetRequest('/employees');
+	expect(res.status).to.eql(200);
+});
+
+Scenario('Verificar empleado 1', async () => {
+	const res = await I.sendGetRequest('/employees/1');
+	//console.log(res);
+	expect(res.data.firstName).to.eql('Bilbo');
+	expect(res.data.lastName).to.eql('Baggins');
+});
+```
+
+  - Reemplazar contenido de codecept.conf.js por:
+
+```
+exports.config = {
+	tests: "./*_test.js",
+	output: "./output",
+	helpers: {
+		REST: {
+			endpoint: "http://localhost:8080",
+			onRequest: () => {
+			}
+		}
+	},
+	include: {},
+	bootstrap: null,
+	mocha: {},
+	name: "codeceptjs-rest"
+};
+
+```
+
+ - Levantar la aplicación payroll/server y correr el test:
+```npx codeceptjs run --steps```
+
+ - Analizar resultados
+
+#### 4- Habilitar reportes para utilizarlos en CICD
+  - Instalar el modulo para reporting
+```
+npm i mocha-junit-reporter mocha-multi --save
+```
+  - Reemplazar la key mocha en el archivo codecept.conf.js por:
+
+```
+	mocha:  {
+    "reporterOptions": {
+      "codeceptjs-cli-reporter": {
+        "stdout": "-",
+        "options": {
+          "steps": true,
+        }
+      },
+      "mocha-junit-reporter": {
+        "stdout": "./output/console.log",
+        "options": {
+          "mochaFile": "./output/result.xml"
+        },
+        "attachments": true //add screenshot for a failed test
+		  }
+		}
+	},
+```
+
+  - Ejecutar los tests nuevamente
+
+```
+npx codeceptjs run --steps --reporter mocha-multi
+```
+ 
+  - La salida compatible con Jenkins esta en ./output/results.xml
+
+#### 5- Integrar la ejecución en Jenkins
+  - Utilizando la funcionalidad de Junit test en Jenkins colectar estos resultados de la ejecución después del deployment.
