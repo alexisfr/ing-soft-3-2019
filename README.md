@@ -929,7 +929,6 @@ mvn sonar:sonar \
 #### 9- Incluir el analisis en el Pipeline
   - Agregar el paso de análisis automático de código en Jenkins u otra herramienta de CI/CD para el proyecto  **./payroll/server**
 
-
 ## Trabajo Práctico 9 - Pruebas de unidad
 
 ## 1- Objetivos de Aprendizaje
@@ -1479,3 +1478,4 @@ $ curl https://ancient-reaches-06178.herokuapp.com/employees
 #### 3- Integrar el despligue en Jenkins
   - Agregar un Job o un Stage para deployar la aplicación en Heroku
   - Ejecutar los tests de Integración / UAT desde Jenkins y colectar los resultados utilizando esta instancia de la aplicación. 
+
