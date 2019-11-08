@@ -22,7 +22,9 @@ Repositorio Git de Ingeniería del Software 3 - Año 2019
 
   * [Trabajo Práctico 9 - Pruebas de unidad](#trabajo-Práctico-9---Pruebas-de-unidad)
 
-  * [Trabajo Práctico 10 - Pruebas de Integración](Trabajo-Práctico-10---Pruebas-de-Integración)
+  * [Trabajo Práctico 10 - Pruebas de Integración](#Trabajo-Práctico-10---Pruebas-de-Integración)
+
+  * [Trabajo Práctico 11 - Despliegue de aplicaciones](#Trabajo-Práctico-11---Despliegue-de-aplicaciones)
 
 
 ## Trabajo Práctico 1 - Git Básico
@@ -1289,7 +1291,7 @@ exports.config = {
  - Finalmente correr el test:
 ```npx codeceptjs run --steps```
 
-#### 3- Obtener el código
+#### 3- Testeando la aplicación Payroll
   - En un directorio, por ejemplo C:\tests\payroll-test ejecutar:
 
 ```bash
@@ -1403,3 +1405,77 @@ npx codeceptjs run --steps --reporter mocha-multi
 
 #### 5- Integrar la ejecución en Jenkins
   - Utilizando la funcionalidad de Junit test en Jenkins colectar estos resultados de la ejecución después del deployment.
+
+
+## Trabajo Práctico 11 - Despliegue de aplicaciones
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos acerca de las herramientas de despliegue y releases de aplicaciones.
+ - Configurar este tipo de herramientas.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery: Cap 10)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+ - Los ejercicios se realizarán en clase con asistencia del Jefe de trabajos prácticos.
+ - Los despliegues (deployments) de aplicaciones se pueden realizar en diferentes tipos de entornos
+   - On-Premise (internos) es decir en Servidores propios.
+   - Nubes Publicas, ejemplo AWS, Azure, Gcloud, etc.
+   - Plataformas como servicios (PASS), ejemplo Heroku, Google App Engine, etc
+ - Para este practico utilizaremos como ejemplo a Heroku
+
+### 4- Desarrollo:
+
+#### 1- Configurando Heroku
+  - Crear una cuenta en Heroku https://dashboard.heroku.com
+  - Instalar la utilidad de línea de comando de Heroku: https://devcenter.heroku.com/articles/heroku-cli
+  - Abrir una línea de comandos y registrase con la aplicación CLI
+```
+heroku login
+heroku container:login
+```
+
+#### 2- Creando y Desplegando la aplicación Payroll
+  - Modificar el archivo Dockerfile de nuestra aplicación para que sea compatible con Heroku (necesitamos definir una variable de entorno para el puerto donde correrá el servicio):
+```
+FROM openjdk:8-jre-alpine
+
+RUN apk add --no-cache bash
+
+WORKDIR /opt
+
+COPY target/server-0.0.1-SNAPSHOT.jar .
+
+ENV PORT=8080
+
+EXPOSE 8080
+
+CMD ["java", "-Xms32m", "-Xmx128m", "-jar", "-Dserver.port=${PORT}", "server-0.0.1-SNAPSHOT.jar"]
+```
+  - Abrir una línea de comandos y cambiar el directorio a donde se encuentra nuestra aplicación
+```
+cd ./payroll/server
+```
+  - Crear una nueva aplicación en Heroku
+```
+heroku create
+```
+  - Esto creara un aplicación con un nombre determinando, por ejemplo **ancient-reaches-06178**
+  - Generar y subir la imagen de Docker al registry de Heroku, desde este registry se desplegara la aplicación en Heroku
+```
+heroku container:push web --app=ancient-reaches-06178
+```
+  - Una vez terminada la operación, procedemos a deployar la aplicación
+```
+heroku container:release web --app=ancient-reaches-06178
+```
+  - Nuestra aplicación estará ahora disponible en https://ancient-reaches-06178.herokuapp.com/
+```
+$ curl https://ancient-reaches-06178.herokuapp.com/employees
+[{"id":1,"name":"Bilbo Baggins","role":"burglar"},{"id":2,"name":"Frodo Baggins","role":"thief"}]
+```
+  - Con esto vemos que está retornando los valores esperados.
+
+#### 3- Integrar el despligue en Jenkins
+  - Agregar un Job o un Stage para deployar la aplicación en Heroku
+  - Ejecutar los tests de Integración / UAT desde Jenkins y colectar los resultados utilizando esta instancia de la aplicación. 
