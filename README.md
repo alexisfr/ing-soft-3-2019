@@ -1,4 +1,4 @@
-# Ingeniería del Sofware 3 - Práctico
+# Ingeniería del Software 3 - Práctico
 
 Repositorio Git de Ingeniería del Software 3 - Año 2019
 
@@ -143,7 +143,7 @@ Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery
 #### 2- Instalar Maven
 - Instalar maven desde https://maven.apache.org/download.cgi (última versión disponible 3.6.1)
 - Descomprimir en una carpeta, por ejemplo C:\tools
-- Agregar el siguiente directorio a la variable de entorno PATH, asumiendo que los binarios de ant estan en C:\tools\apache-maven-3.6.1\bin
+- Agregar el siguiente directorio a la variable de entorno PATH, asumiendo que los binarios de ant están en C:\tools\apache-maven-3.6.1\bin
 
   ```bash   
     SET PATH=%PATH%;C:\tools\apache-maven-3.6.1\bin
@@ -175,7 +175,7 @@ Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery
 | validate      | valida si el proyecto está correcto y toda la información está disponible                                                             |
 | compile       | compila el código fuente del proyecto                                                                                 |
 | test          | prueba el código fuente compilado utilizando un marco de prueba de unidad adecuado. Estas pruebas no deberían requerir que el código se empaquete o implemente |
-| package       | toma el código compilado y lo empaquéta en su formato distribuible, como un JAR.                                                     |
+| package       | toma el código compilado y lo empaqueta en su formato distribuible, como un JAR.                                                     |
 | verify        | ejecuta cualquier verificación de los resultados de las pruebas de integración para garantizar que se cumplan los criterios de calidad                                                      |
 | install       | instal1 el paquete en el repositorio local, para usarlo como dependencia en otros proyectos localmente                                       |
 | deploy        | hecho en el entorno de compilación, copia el paquete final en el repositorio remoto para compartirlo con otros desarrolladores y proyectos.      |
@@ -337,7 +337,7 @@ java -jar target\ejemplo-uber-jar.jar
 
   - Familiarizarse con la interfaz grafica
     - Ejecutar la aplicación
-    - Debugear la aplicación
+    - Depurar la aplicación
     - Correr unit tests y coverage
     - Ejecutar los goals de maven
     - Encontrar donde se puede cambiar la configuración de Maven.
@@ -506,7 +506,7 @@ Los contenderos no fueron pensados como un remplazo de las máquinas virtuales. 
 - **Container Registry**: Las imágenes de Docker son almacenadas en un Registry y pueden ser descargadas cuando se necesitan. Un registry pude ser público, por ejemplo, DockerHub o instalado en un entorno privado.
 - **Docker Daemon**: el servicio en segundo plano que se ejecuta en el host que gestiona la construcción, ejecución y distribución de contenedores Docker. El daemon es el proceso que se ejecuta en el sistema operativo con el que los clientes hablan.
 - **Docker Client**: la herramienta de línea de comandos que permite al usuario interactuar con el daemon. En términos más generales, también puede haber otras formas de clientes, como Kitematic, que proporciona una GUI a los usuarios. 
-- **Dockerfile**: Son usados por los desarrolladores para automatizar la creación de imágenes de containedores. Con un Dockerfile, el demonio de Docker puede automáticamente construir una imagen.
+- **Dockerfile**: Son usados por los desarrolladores para automatizar la creación de imágenes de contenedores. Con un Dockerfile, el demonio de Docker puede automáticamente construir una imagen.
 
 ## 4- Desarrollo:
 
@@ -527,7 +527,7 @@ docker version
   ```bash
   docker pull busybox
   ```
-  - Verificar qué versión y tamaño tiene la imagen bajada, obtener una lista de imagenes locales:
+  - Verificar qué versión y tamaño tiene la imagen bajada, obtener una lista de imágenes locales:
 ```bash
 docker images
 ```
@@ -593,7 +593,7 @@ docker container prune
 
 #### 7- Montando volúmenes
 
-Hasta este punto los contenedores ejecutados no tenían contacto con el exterior, ellos corrían en su propio entorno hasta que terminaran su ejecución. Ahora veremos como montar un volumen dentro del contenedor para visualizar por ejemplo archivos del sistema huesped:
+Hasta este punto los contenedores ejecutados no tenían contacto con el exterior, ellos corrían en su propio entorno hasta que terminaran su ejecución. Ahora veremos como montar un volumen dentro del contenedor para visualizar por ejemplo archivos del sistema huésped:
 
   - Ejecutar el siguiente comando, cambiar myusuario por el usuario que corresponda. En linux/Mac puede utilizarse /home/miusuario):
 ```bash
@@ -783,7 +783,7 @@ docker run -d -p 8081:8080 -p 50000:50000 -v ~/jenkins/data:/var/jenkins_home je
   - De la lista de plugins disponibles instalamos **Maven Integration plugin**
   - Instalamos sin reiniciar el servidor.
   - Abrir nuevamente página de Plugins y explorar la lista, para familiarizarse qué tipo de plugins hay disponibles.
-  - En la sección de administracion abrir la opción de configuracion de herramientas
+  - En la sección de administración abrir la opción de configuración de herramientas
   - Agregar maven con el nombre de **M3** y que se instale automáticamente.
 
 #### 4- Creando el primer Pipeline Job
@@ -794,7 +794,7 @@ docker run -d -p 8081:8080 -p 50000:50000 -v ~/jenkins/data:/var/jenkins_home je
  
 #### 5- Creando un Pipeline Job con Git y Maven
   - Similar al paso anterior creamos un ítem con el nombre **simple-maven**
-  - Elegir **Git + Maven** en la seccion **try sample Pipeline**
+  - Elegir **Git + Maven** en la sección **try sample Pipeline**
   - Guardar y ejecutar el Job
   - Analizar el script, para identificar los diferentes pasos definidos y correlacionarlos con lo que se ejecuta en el Job y se visualiza en la página del Job.
 
@@ -880,11 +880,11 @@ Este trabajo práctico corresponde a la unidad Nº: 5 (Libro Ingeniería de Soft
   - Clonar el repositorio al que se le hizo el fork.
   - En SonarCloud crear un nuevo proyecto (haciendo click en el botón +)
   - Elegir la opción de analizar nuevo projecto.
-  - Completar las opciones para crear una nueva Organizacion (se puede usar su cuenta de github).
+  - Completar las opciones para crear una nueva Organización (se puede usar su cuenta de github).
   - Seleccionar el repositorio java-projects de su usuario y presionar **Set up**
 
 #### 2- Correr Análisis de código
-  - Una vez creado el proyecto, se debe elegir la opción de analisis manual
+  - Una vez creado el proyecto, se debe elegir la opción de análisis manual
   - Seleccionar Maven.
   - Correr el comando generado en la raíz del repositorio clonado locamente, hay que agregar la opción **-Dmaven.test.failure.ignore=true** al final del comando, algo similar a esto:
 ```bash
@@ -1215,8 +1215,7 @@ Codeceptjs es un framework end to end para pruebas de integración y de aceptaci
 ## 4- Desarrollo:
 
 #### 1- Familiarizarse con CodeceptJs
-  - El objeto I
-  - 
+  - El objeto I y sus funcionalidades básicas: https://codecept.io/basics
 
 #### 2- Testeando la pagina de GitHub
 
@@ -1418,10 +1417,10 @@ Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery
 ### 3- Consignas a desarrollar en el trabajo práctico:
  - Los ejercicios se realizarán en clase con asistencia del Jefe de trabajos prácticos.
  - Los despliegues (deployments) de aplicaciones se pueden realizar en diferentes tipos de entornos
-   - On-Premise (internos) es decir en Servidores propios.
-   - Nubes Publicas, ejemplo AWS, Azure, Gcloud, etc.
-   - Plataformas como servicios (PASS), ejemplo Heroku, Google App Engine, etc
- - Para este practico utilizaremos como ejemplo a Heroku
+   - On-Premise (internos) es decir en servidores propios.
+   - Nubes Públicas, ejemplo AWS, Azure, Gcloud, etc.
+   - Plataformas como servicios (PaaS), ejemplo Heroku, Google App Engine, etc
+ - Para este práctico utilizaremos como ejemplo a Heroku
 
 ### 4- Desarrollo:
 
@@ -1460,11 +1459,11 @@ cd ./payroll/server
 heroku create
 ```
   - Esto creara un aplicación con un nombre determinando, por ejemplo **ancient-reaches-06178**
-  - Generar y subir la imagen de Docker al registry de Heroku, desde este registry se desplegara la aplicación en Heroku
+  - Generar y subir la imagen de Docker al registry de Heroku, desde este registry se desplegará la aplicación en Heroku
 ```
 heroku container:push web --app=ancient-reaches-06178
 ```
-  - Una vez terminada la operación, procedemos a deployar la aplicación
+  - Una vez terminada la operación, procedemos a desplegar la aplicación
 ```
 heroku container:release web --app=ancient-reaches-06178
 ```
@@ -1475,7 +1474,6 @@ $ curl https://ancient-reaches-06178.herokuapp.com/employees
 ```
   - Con esto vemos que está retornando los valores esperados.
 
-#### 3- Integrar el despligue en Jenkins
-  - Agregar un Job o un Stage para deployar la aplicación en Heroku
+#### 3- Integrar el despliegue en Jenkins
+  - Agregar un Job o un Stage para desplegar la aplicación en Heroku
   - Ejecutar los tests de Integración / UAT desde Jenkins y colectar los resultados utilizando esta instancia de la aplicación. 
-
