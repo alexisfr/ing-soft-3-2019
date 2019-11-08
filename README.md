@@ -14,11 +14,17 @@ Repositorio Git de Ingeniería del Software 3 - Año 2019
 
   * [Trabajo Práctico 5 - Imágenes de Docker](#trabajo-práctico-5---Imágenes-de-Docker)
 
-  * [Trabajo Práctico 6 - Primeros pasos con Jenkins](#trabajo-práctico-6---primeros-pasos-con-jenkins)
+  * [Trabajo Práctico 6 - Primeros pasos con Jenkins](#trabajo-Práctico-6---Primeros-pasos-con-Jenkins)
 
-  * [Trabajo Práctico 7 - Herramientas de construcción en la nube](#trabajo-práctico-7---herramientas-de-construcción-en-la-nube)
+  * [Trabajo Práctico 7 - Herramientas de construcción en la nube](#trabajo-Práctico-7---Herramientas-de-construcción-en-la-nube)
 
-  * [Trabajo Práctico 8 - Métricas de código](#Trabajo-Práctico-8---Métricas-de-código)
+  * [Trabajo Práctico 8 - Métricas de código](#trabajo-Práctico-8---Métricas-de-código)
+
+  * [Trabajo Práctico 9 - Pruebas de unidad](#trabajo-Práctico-9---Pruebas-de-unidad)
+
+  * [Trabajo Práctico 10 - Pruebas de Integración](#Trabajo-Práctico-10---Pruebas-de-Integración)
+
+  * [Trabajo Práctico 11 - Despliegue de aplicaciones](#Trabajo-Práctico-11---Despliegue-de-aplicaciones)
 
 
 ## Trabajo Práctico 1 - Git Básico
@@ -70,7 +76,7 @@ Para algunos de los puntos proveer imágenes.
   - Instalar alguna herramienta de comparación. Idealmente una 3-Way:
     - P4Merge https://www.perforce.com/downloads/visual-merge-tool:
 ![alt text](imagenes/p4merge.png)
-    - Se puede omitir registración. Instalar solo opcion Merge and DiffTool.
+    - Se puede omitir registración. Instalar solo opción Merge and DiffTool.
 
 - ByondCompare trial version https://www.scootersoftware.com/download.php
   - Configurar Tortoise/SourceTree para soportar esta herramienta.
@@ -922,3 +928,554 @@ mvn sonar:sonar \
 
 #### 9- Incluir el analisis en el Pipeline
   - Agregar el paso de análisis automático de código en Jenkins u otra herramienta de CI/CD para el proyecto  **./payroll/server**
+
+## Trabajo Práctico 9 - Pruebas de unidad
+
+## 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos sobre conceptos referidos a pruebas de unidad (unit tests).
+ - Generar y ejecutar pruebas unitarias utilizado frameworks disponibles.
+
+## 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 6 (Libro Ingeniería de Software: Cap 8)
+
+## 3- Consignas a desarrollar en el trabajo práctico:
+### Conceptos generales explicaciones de los mismos
+
+#### ¿Qué son las pruebas de software?
+Una prueba de software es una pieza de software que ejecuta otra pieza de software. Valida si ese código da como resultado el estado esperado (prueba de estado) o ejecuta la secuencia de eventos esperados (prueba de comportamiento).
+
+#### ¿Por qué son útiles las pruebas de software?
+Las pruebas de la unidad de software ayudan al desarrollador a verificar que la lógica de una parte del programa sea correcta.
+
+Ejecutar pruebas automáticamente ayuda a identificar regresiones de software introducidas por cambios en el código fuente. Tener una cobertura de prueba alta de su código le permite continuar desarrollando características sin tener que realizar muchas pruebas manuales.
+
+#### Código (o aplicación) bajo prueba
+El código que se prueba generalmente se llama código bajo prueba . Si está probando una aplicación, esto se llama la aplicación bajo prueba .
+
+#### Prueba unitarias (Unit Tests)
+Una prueba de unidad es una pieza de código escrita por un desarrollador que ejecuta una funcionalidad específica en el código que se probará y afirma cierto comportamiento o estado.
+
+El porcentaje de código que se prueba mediante pruebas unitarias generalmente se llama cobertura de prueba.
+
+Una prueba unitaria se dirige a una pequeña unidad de código, por ejemplo, un método o una clase. Las dependencias externas deben eliminarse de las pruebas unitarias, por ejemplo, reemplazando la dependencia con una  implementación de prueba o un objeto (mock) creado por un framework de prueba.
+
+Las pruebas unitarias no son adecuadas para probar la interfaz de usuario compleja o la interacción de componentes. Para esto, debes desarrollar pruebas de integración.
+
+#### Frameworks de pruebas unitarias para Java
+Hay varios frameworks de prueba disponibles para Java. Los más populares son JUnit y TestNG
+
+#### ¿Qué parte del software debería probarse?
+Lo que debe probarse es un tema muy controvertido. Algunos desarrolladores creen que cada declaración en su código debe ser probada.
+
+En cualquier caso, debe escribir pruebas de software para las partes críticas y complejas de su aplicación. Si introduce nuevas funciones, un banco de pruebas sólido también lo protege contra la regresión en el código existente.
+
+En general, es seguro ignorar el código trivial. Por ejemplo, es inútil escribir pruebas para los métodos getter y setter que simplemente asignan valores a los campos. Escribir pruebas para estas afirmaciones consume mucho tiempo y no tiene sentido, ya que estaría probando la máquina virtual Java. La propia JVM ya tiene casos de prueba para esto. Si está desarrollando aplicaciones de usuario final, puede suponer que una asignación de campo funciona en Java.
+
+Si comienza a desarrollar pruebas para una base de código existente sin ninguna prueba, es una buena práctica comenzar a escribir pruebas para el código en el que la mayoría de los errores ocurrieron en el pasado. De esta manera puede enfocarse en las partes críticas de su aplicación.
+
+## 4- Desarrollo:
+
+#### 1- Familiarizarse con algunos conceptos del framework JUnit:
+
+| JUnit 4                            | Descripción                                                                                                                                                                                                                                                                                                                       |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| import org.junit.*                 | Instrucción de importación para usar las siguientes anotaciones.                                                                                                                                                                                                                                                                  |
+| @Test                              | Identifica un método como un método de prueba.                                                                                                                                                                                                                                                                                    |
+| @Before                            | Ejecutado antes de cada prueba. Se utiliza para preparar el entorno de prueba (por ejemplo, leer datos de entrada, inicializar la clase).                                                                                                                                                                                         |
+| @After                             | Ejecutado después de cada prueba. Se utiliza para limpiar el entorno de prueba (por ejemplo, eliminar datos temporales, restablecer los valores predeterminados). También puede ahorrar memoria limpiando costosas estructuras de memoria.                                                                                        |
+| @BeforeClass                       | Ejecutado una vez, antes del comienzo de todas las pruebas. Se usa para realizar actividades intensivas de tiempo, por ejemplo, para conectarse a una base de datos. Los métodos marcados con esta anotación deben definirse staticpara que funcionen con JUnit.                                                                  |
+| @AfterClass                        | Ejecutado una vez, después de que se hayan terminado todas las pruebas. Se utiliza para realizar actividades de limpieza, por ejemplo, para desconectarse de una base de datos. Los métodos anotados con esta anotación deben definirse staticpara que funcionen con JUnit.                                                       |
+| @Ignore o @Ignore("Why disabled")  | Marca que la prueba debe ser deshabilitada. Esto es útil cuando se ha cambiado el código subyacente y el caso de prueba aún no se ha adaptado. O si el tiempo de ejecución de esta prueba es demasiado largo para ser incluido. Es una mejor práctica proporcionar la descripción opcional, por qué la prueba está deshabilitada. |
+| @Test (expected = Exception.class) | Falla si el método no arroja la excepción nombrada.                                                                                                                                                                                                                                                                               |
+| @Test(timeout=100)                 | Falla si el método tarda más de 100 milisegundos.                                                                                                                                                                                                                                                                                 |
+
+| Declaración                                          | Descripción                                                                                                                                                                                                                    |
+|------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| fail ([mensaje])                                   | Deja que el método falle. Se puede usar para verificar que no se llegue a una determinada parte del código o para realizar una prueba de falla antes de implementar el código de prueba. El parámetro del mensaje es opcional. |
+| assertTrue ([mensaje,] condición booleana)           | Comprueba que la condición booleana es verdadera.                                                                                                                                                                              |
+| assertFalse ([mensaje,] condición booleana)          | Comprueba que la condición booleana es falsa.                                                                                                                                                                                  |
+| assertEquals ([mensaje,] esperado, real)             | Comprueba que dos valores son iguales. Nota: para las matrices, la referencia no se verifica en el contenido de las matrices.                                                                                                  |
+| assertEquals ([mensaje,] esperado, real, tolerancia) | Pruebe que los valores float o double coincidan. La tolerancia es el número de decimales que debe ser el mismo.                                                                                                                |
+| assertNull (objeto [mensaje,])                       | Verifica que el objeto sea nulo.                                                                                                                                                                                               |
+| assertNotNull (objeto [mensaje,])                    | Verifica que el objeto no sea nulo.                                                                                                                                                                                            |
+| assertSame ([mensaje,] esperado, real)               | Comprueba que ambas variables se refieren al mismo objeto.                                                                                                                                                                     |
+| assertNotSame ([mensaje,] esperado, real)            | Comprueba que ambas variables se refieren a diferentes objetos.                                                                                                                                                                |
+#### 2- Configurar Proyecto para correr unit tests
+  - Configurar el proyecto payroll/server agregando esta dependencia al server/pom.xml
+```
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
+		    <version>2.1.6.RELEASE</version>
+		</dependency>
+```
+  - Crear una clase llamada EmployeeTests.java en la carpeta src/test/java con el contenido
+
+```java
+package payroll;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class EmployeeTest {
+
+    @Test
+    public void TestBasic() {
+    	Employee alex = new Employee("alex", "test", "test");
+    	assertEquals(alex.getName(), "alex test");
+    }
+}
+```
+  - Ejecutar los tests utilizando la IDE
+
+#### 3- Familiarizarse con algunos conceptos de Mockito
+Mockito es un framework de simulación popular que se puede usar junto con JUnit. Mockito permite crear y configurar objetos falsos. El uso de Mockito simplifica significativamente el desarrollo de pruebas para clases con dependencias externas.
+
+Si se usa Mockito en las pruebas, normalmente:
+ 1. Se burlan las dependencias externas e insertan los mocs en el código bajo prueba
+ 2. Se ejecuta el código bajo prueba
+ 3. Se valida que el código se ejecutó correctamente
+
+#### 4- Creando un Mock para el repositorio
+ - Crear la siguiente clase en src/test/java
+
+```java
+package payroll;
+
+import java.io.IOException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = PayrollApplication.class)
+@WebAppConfiguration
+public abstract class AbstractTest {
+	protected MockMvc mvc;
+	
+	//@MockBean protected EmployeeRepository repository;
+	
+	@Autowired
+	WebApplicationContext webApplicationContext;
+
+	protected void setUp() {
+		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	}
+}
+```
+
+  - Agregar esta otra clase también en el mismo directorio
+
+```java
+package payroll;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+
+public class EmployeeControllerTests extends AbstractTest {
+	
+   @Override
+   @Before
+   public void setUp() {
+      super.setUp();
+   }
+
+	@Test
+	public void getEmployees_Test_1() throws Exception {
+		String uri = "/employees";
+	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+	         .accept(MediaTypes.HAL_JSON_VALUE)).andReturn();
+	      
+	    String content = mvcResult.getResponse().getContentAsString();
+	    int status = mvcResult.getResponse().getStatus();
+	    assertEquals(200, status);
+	}
+	
+	@Test
+	public void getEmployees_Test_2() throws Exception {
+		
+		mvc.perform(get("/employees").accept(MediaTypes.HAL_JSON_VALUE))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$._embedded.employeeList[0].id", is(1)))
+		.andExpect(jsonPath("$._embedded.employeeList[0].firstName", is("Bilbo")))
+		.andExpect(jsonPath("$._embedded.employeeList[0].lastName", is("Baggins")))
+		.andExpect(jsonPath("$._embedded.employeeList[0].role", is("ring bearer")))
+		//.andExpect(jsonPath("$._embedded.employeeList[0]._links.self.href", is("http://localhost/employees/1")))
+		.andExpect(jsonPath("$._embedded.employeeList[0]._links.employees.href", is("http://localhost/employees")))
+		.andExpect(jsonPath("$._embedded.employeeList[1].id", is(2)))
+		.andExpect(jsonPath("$._embedded.employeeList[1].firstName", is("Fodo")))
+		.andExpect(jsonPath("$._embedded.employeeList[1].lastName", is("Baggins")))
+		.andExpect(jsonPath("$._embedded.employeeList[1].role", is("burglar")))
+		//.andExpect(jsonPath("$._embedded.employeeList[1]._links.self.href", is("http://localhost/employees/2")))
+		.andExpect(jsonPath("$._embedded.employeeList[1]._links.employees.href", is("http://localhost/employees")))
+		.andExpect(jsonPath("$._links.self.href", is("http://localhost/employees"))) //
+		.andReturn();
+	}
+	
+	@Test
+	public void getEmployees_Test_3() throws Exception {
+
+//		given(repository.findAll()).willReturn( //
+//		Arrays.asList( //
+//				new Employee("Frodo1", "Baggins", "ring bearer"), //
+//				new Employee("Bilbo1", "Baggins", "burglar")));
+		
+		mvc.perform(get("/employees").accept(MediaTypes.HAL_JSON_VALUE))
+		.andDo(print())
+		.andExpect(status().isOk())
+		//.andExpect(jsonPath("$._embedded.employeeList[0].id", is(1)))
+		.andExpect(jsonPath("$._embedded.employeeList[0].firstName", is("Frodo1")))
+		.andExpect(jsonPath("$._embedded.employeeList[0].lastName", is("Baggins")))
+		.andExpect(jsonPath("$._embedded.employeeList[0].role", is("ring bearer")))
+		//.andExpect(jsonPath("$._embedded.employeeList[0]._links.self.href", is("http://localhost/employees/1")))
+		.andExpect(jsonPath("$._embedded.employeeList[0]._links.employees.href", is("http://localhost/employees")))
+		//.andExpect(jsonPath("$._embedded.employeeList[1].id", is(2)))
+		.andExpect(jsonPath("$._embedded.employeeList[1].firstName", is("Bilbo1")))
+		.andExpect(jsonPath("$._embedded.employeeList[1].lastName", is("Baggins")))
+		.andExpect(jsonPath("$._embedded.employeeList[1].role", is("burglar")))
+		//.andExpect(jsonPath("$._embedded.employeeList[1]._links.self.href", is("http://localhost/employees/2")))
+		.andExpect(jsonPath("$._embedded.employeeList[1]._links.employees.href", is("http://localhost/employees")))
+		.andExpect(jsonPath("$._links.self.href", is("http://localhost/employees"))) //
+		.andReturn();
+	}
+}
+```
+
+  - Analizar estos tests con el jefe de trabajos prácticos
+
+  - Hacer los ajustes necesarios (remover comentarios) y verificar que esta utilizando el repositorio falso
+
+  - Utilizar el repositorio falso en todos los test cases dado que estamos escribiendo unitests
+
+
+#### 5- Agregar otros unit tests
+  - Agregar al menos un unit test para otro endpoint, por ejemplo employees/{id} u Orders.
+
+#### 6- Capturar los unit tests como parte del proceso de CI/CD
+  - Hacer los cambios en Jenkins (on en la herramienta de CICD utilizada) y en el pom.xml si es necesario, para capturar los resultados y mostrarlos en la ejecución del build
+
+
+# Trabajo Práctico 10 - Pruebas de Integración
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos sobre conceptos referidos a pruebas de integración (integration tests).
+ - Generar y ejecutar pruebas de integración utilizado frameworks de código abierto.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 6 (Libro Ingeniería de Software: Cap 8)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+
+#### Conceptos generales explicaciones de los mismos
+
+#### Pruebas de integración
+Una prueba de integración tiene como objetivo probar el comportamiento de un componente o la integración entre un conjunto de componentes. El término prueba funcional se usa a veces como sinónimo para prueba de integración. Las pruebas de integración comprueban que todo el sistema funciona según lo previsto, por lo que reducen la necesidad de pruebas manuales intensivas.
+
+Este tipo de pruebas le permiten traducir sus historias de usuario en un conjunto de pruebas. La prueba se asemejaría a una interacción esperada del usuario con la aplicación.
+
+#### Frameworks de pruebas 
+
+Existen una gran variedad de herramientas o frameworks disponibles para las pruebas de integración, tanto para componentes del backend como del frontend. Estas pueden ser comerciales, de código abierto o desarrolladas y utilizadas internamente por las compañías de software.
+
+Para este trabajo práctico vamos a probar aplicaciones web y rest y para ello utilizaremos Codeceptjs como ejemplo.
+
+#### Selenium
+
+Selenium es una herramienta de prueba de software automatizada y de código abierto para probar aplicaciones web. Tiene capacidades para operar en diferentes navegadores y sistemas operativos. Selenium es un conjunto de herramientas que ayuda a los testers a automatizar las aplicaciones basadas en la web de manera más eficiente.
+
+En este trabajo práctico utilizaremos la opción **WebDriver**, que nos permite enviar comandos directamente al navegador y obtener resultados. Además, podemos codificar las pruebas directamente en un lenguaje de programación, por ejemplo javascript y ejecutarlas como parte del proceso de CI/CD.
+
+#### Codeceptjs https://codecept.io/
+
+Codeceptjs es un framework end to end para pruebas de integración y de aceptación de usuario, es muy simple de usar y abstrae al que escribe los tests de trabajar directamente con el driver de Selenium o algún otro driver.
+
+## 4- Desarrollo:
+
+#### 1- Familiarizarse con CodeceptJs
+  - El objeto I
+  - 
+
+#### 2- Testeando la pagina de GitHub
+
+  - En un directorio, por ejemplo C:\tests\githubtests ejecutar:
+
+```bash
+npm init -y
+```
+
+ - Instalar CodeceptJS con la librería webdriverio
+```npm install codeceptjs webdriverio --save-dev```
+
+ - Inicializar CodeceptJS:
+
+```npx codeceptjs init```
+
+(usar node node_modules/.bin/codeceptjs init si tiene problemas con npx)
+
+  - Responder las preguntas. Aceptar valores por defecto. Cuando se pregunte por los helpers, seleccionar WebDriver. Cuando pregunte por chrome se puede cambiar a Firefox si lo desea.
+
+```
+? What helpers do you want to use?
+❯◉ WebDriver
+ ◯ Protractor
+ ◯ Puppeteer
+ ◯ Appium
+ ◯ Nightmare
+ ◯ FileSystem
+```
+
+   - Crear el Test, va a preguntar por nombre de archivo y de prueba, poner 'github':
+```npx codeceptjs gt```
+
+  - Editar el archivo generado:
+```
+Feature('My First Test');
+Scenario('test something', (I) => {
+
+});
+```
+
+  - Escribir un escenario de prueba:
+```Feature('My First Test');
+
+Scenario('test something', (I) => {
+  I.amOnPage('https://github.com');
+  I.see('GitHub');
+});
+```
+
+  - Preparar Selenium Server:
+
+```npm i @wdio/selenium-standalone-service --save```
+
+  - Para que selenium comience automáticamente agregar la sección de plugins:
+
+```
+exports.config = {
+  // ...
+  // inside condecept.conf.js
+  plugins: {
+    wdio: {
+      enabled: true,
+      services: ['selenium-standalone']
+    }
+  }
+}
+
+```
+
+ - Finalmente correr el test:
+```npx codeceptjs run --steps```
+
+#### 3- Testeando la aplicación Payroll
+  - En un directorio, por ejemplo C:\tests\payroll-test ejecutar:
+
+```bash
+npm init -y
+```
+
+ - Instalar CodeceptJS con la librería webdriverio
+```npm install codeceptjs chai --save-dev```
+
+ - Inicializar CodeceptJS:
+
+```npx codeceptjs init```
+
+(usar node node_modules/.bin/codeceptjs init si tiene problemas con npx)
+
+  - Responder las preguntas. Aceptar valores por defecto. Cuando se pregunte por los helpers, seleccionar WebDriver. Cuando pregunte por chrome se puede cambiar a Firefox si lo desea.
+
+```
+? What helpers do you want to use?
+❯◉ WebDriver
+ ◯ Protractor
+ ◯ Puppeteer
+ ◯ Appium
+ ◯ Nightmare
+ ◯ FileSystem
+```
+
+   - Crear el Test, va a preguntar por nombre de archivo y de prueba, poner 'github':
+```npx codeceptjs gt```
+
+  - Editar el archivo generado:
+```
+const expect = require('chai').expect;
+const {I} = inject();
+
+Feature('Payroll');
+
+Scenario('Verificar a successful call', async () => {
+	const res = await I.sendGetRequest('/employees');
+	expect(res.status).to.eql(200);
+});
+
+Scenario('Verificar empleado 1', async () => {
+	const res = await I.sendGetRequest('/employees/1');
+	//console.log(res);
+	expect(res.data.firstName).to.eql('Bilbo');
+	expect(res.data.lastName).to.eql('Baggins');
+});
+```
+
+  - Reemplazar contenido de codecept.conf.js por:
+
+```
+exports.config = {
+	tests: "./*_test.js",
+	output: "./output",
+	helpers: {
+		REST: {
+			endpoint: "http://localhost:8080",
+			onRequest: () => {
+			}
+		}
+	},
+	include: {},
+	bootstrap: null,
+	mocha: {},
+	name: "codeceptjs-rest"
+};
+
+```
+
+ - Levantar la aplicación payroll/server y correr el test:
+```npx codeceptjs run --steps```
+
+ - Analizar resultados
+
+#### 4- Habilitar reportes para utilizarlos en CICD
+  - Instalar el modulo para reporting
+```
+npm i mocha-junit-reporter mocha-multi --save
+```
+  - Reemplazar la key mocha en el archivo codecept.conf.js por:
+
+```
+	mocha:  {
+    "reporterOptions": {
+      "codeceptjs-cli-reporter": {
+        "stdout": "-",
+        "options": {
+          "steps": true,
+        }
+      },
+      "mocha-junit-reporter": {
+        "stdout": "./output/console.log",
+        "options": {
+          "mochaFile": "./output/result.xml"
+        },
+        "attachments": true //add screenshot for a failed test
+		  }
+		}
+	},
+```
+
+  - Ejecutar los tests nuevamente
+
+```
+npx codeceptjs run --steps --reporter mocha-multi
+```
+ 
+  - La salida compatible con Jenkins esta en ./output/results.xml
+
+#### 5- Integrar la ejecución en Jenkins
+  - Utilizando la funcionalidad de Junit test en Jenkins colectar estos resultados de la ejecución después del deployment.
+
+
+## Trabajo Práctico 11 - Despliegue de aplicaciones
+
+### 1- Objetivos de Aprendizaje
+ - Adquirir conocimientos acerca de las herramientas de despliegue y releases de aplicaciones.
+ - Configurar este tipo de herramientas.
+
+### 2- Unidad temática que incluye este trabajo práctico
+Este trabajo práctico corresponde a la unidad Nº: 4 (Libro Continuous Delivery: Cap 10)
+
+### 3- Consignas a desarrollar en el trabajo práctico:
+ - Los ejercicios se realizarán en clase con asistencia del Jefe de trabajos prácticos.
+ - Los despliegues (deployments) de aplicaciones se pueden realizar en diferentes tipos de entornos
+   - On-Premise (internos) es decir en Servidores propios.
+   - Nubes Publicas, ejemplo AWS, Azure, Gcloud, etc.
+   - Plataformas como servicios (PASS), ejemplo Heroku, Google App Engine, etc
+ - Para este practico utilizaremos como ejemplo a Heroku
+
+### 4- Desarrollo:
+
+#### 1- Configurando Heroku
+  - Crear una cuenta en Heroku https://dashboard.heroku.com
+  - Instalar la utilidad de línea de comando de Heroku: https://devcenter.heroku.com/articles/heroku-cli
+  - Abrir una línea de comandos y registrase con la aplicación CLI
+```
+heroku login
+heroku container:login
+```
+
+#### 2- Creando y Desplegando la aplicación Payroll
+  - Modificar el archivo Dockerfile de nuestra aplicación para que sea compatible con Heroku (necesitamos definir una variable de entorno para el puerto donde correrá el servicio):
+```
+FROM openjdk:8-jre-alpine
+
+RUN apk add --no-cache bash
+
+WORKDIR /opt
+
+COPY target/server-0.0.1-SNAPSHOT.jar .
+
+ENV PORT=8080
+
+EXPOSE 8080
+
+CMD ["java", "-Xms32m", "-Xmx128m", "-jar", "-Dserver.port=${PORT}", "server-0.0.1-SNAPSHOT.jar"]
+```
+  - Abrir una línea de comandos y cambiar el directorio a donde se encuentra nuestra aplicación
+```
+cd ./payroll/server
+```
+  - Crear una nueva aplicación en Heroku
+```
+heroku create
+```
+  - Esto creara un aplicación con un nombre determinando, por ejemplo **ancient-reaches-06178**
+  - Generar y subir la imagen de Docker al registry de Heroku, desde este registry se desplegara la aplicación en Heroku
+```
+heroku container:push web --app=ancient-reaches-06178
+```
+  - Una vez terminada la operación, procedemos a deployar la aplicación
+```
+heroku container:release web --app=ancient-reaches-06178
+```
+  - Nuestra aplicación estará ahora disponible en https://ancient-reaches-06178.herokuapp.com/
+```
+$ curl https://ancient-reaches-06178.herokuapp.com/employees
+[{"id":1,"name":"Bilbo Baggins","role":"burglar"},{"id":2,"name":"Frodo Baggins","role":"thief"}]
+```
+  - Con esto vemos que está retornando los valores esperados.
+
+#### 3- Integrar el despligue en Jenkins
+  - Agregar un Job o un Stage para deployar la aplicación en Heroku
+  - Ejecutar los tests de Integración / UAT desde Jenkins y colectar los resultados utilizando esta instancia de la aplicación. 
+
